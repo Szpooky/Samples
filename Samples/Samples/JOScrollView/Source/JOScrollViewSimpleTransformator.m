@@ -23,17 +23,6 @@
     CGFloat     _currentRotation;
 }
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.minimumZoomScale = 1.0;
-        self.maximumZoomScale = 100.0;
-    }
-    return self;
-}
-
 - (void)pinchGestureAction:(UIPinchGestureRecognizer*)gesture
 {
     if ([gesture state] == UIGestureRecognizerStateBegan)

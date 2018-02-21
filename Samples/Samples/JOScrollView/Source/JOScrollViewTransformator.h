@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong)   UIView*     baseView;           // default nil
 
-@property (nonatomic, strong)   UIView*     contentView;        // default nil. The view wich will transformated
+@property (nonatomic, strong)   UIView*     contentView;        // default nil. The view wich will transformed.
 
 @property (nonatomic)           CGFloat     minimumZoomScale;   // default is 1.0
 

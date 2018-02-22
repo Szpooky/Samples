@@ -12,6 +12,6 @@
 
 @property (nonatomic)           CGFloat         padding;        // default 20.0
 
-@property (nonatomic, readonly) CGRect          captureRect;
+@property (nonatomic, readonly) CGRect          captureRect;    // bounds of the circle
 
 @end

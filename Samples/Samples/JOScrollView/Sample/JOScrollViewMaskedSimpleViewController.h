@@ -8,6 +8,10 @@
 
 #import "JOScrollViewSimpleViewController.h"
 
+@class JOCircleMaskView;
+
 @interface JOScrollViewMaskedSimpleViewController : JOScrollViewSimpleViewController
+
+@property (nonatomic, readonly) JOCircleMaskView* maskView;
 
 @end

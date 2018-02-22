@@ -82,10 +82,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIBarButtonItem* cancelButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
-    [cancelButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName:self.textColor} forState:UIControlStateNormal];
-    self.navigationItem.leftBarButtonItem = cancelButtonItem;
-    
     self.navigationController.navigationBar.barTintColor = self.tintColor;
     
     self.photosCollectionViewFlowLayout = [UICollectionViewFlowLayout new];
@@ -129,6 +125,13 @@
     else
     {
         self.navigationItem.rightBarButtonItem = nil;
+    }
+    
+    if(self.navigationItem.backBarButtonItem == nil)
+    {
+        UIBarButtonItem* cancelButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+        [cancelButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName:self.textColor} forState:UIControlStateNormal];
+        self.navigationItem.leftBarButtonItem = cancelButtonItem;
     }
 }
 

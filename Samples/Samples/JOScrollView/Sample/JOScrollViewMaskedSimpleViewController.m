@@ -27,7 +27,8 @@
     scrollViewRect.size.height += 100.0;
     self.scrollView.frame = scrollViewRect;
     
-    [self.scrollView addSubview:[[JOCircleMaskView alloc] initWithFrame:self.scrollView.bounds]];
+    _maskView = [[JOCircleMaskView alloc] initWithFrame:self.scrollView.bounds];
+    [self.scrollView addSubview:_maskView];
 }
 
 @end

@@ -44,6 +44,10 @@
     [self.dataSource addObject:@{@"title" : @"ScrollView" , @"controller" : @"JOScrollViewTableViewController"}];
     
     [self.dataSource addObject:@{@"title" : @"Downloader"}];
+    
+    [self.dataSource addObject:@{@"title" : @"AttributedLabel"}];
+    
+    [self.dataSource addObject:@{@"title" : @"ImagePicker"}];
 }
 
 #pragma mark - TableView Delegate And Datasource

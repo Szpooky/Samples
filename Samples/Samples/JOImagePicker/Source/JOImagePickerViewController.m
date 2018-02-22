@@ -25,6 +25,8 @@
 
 @property (nonatomic, readonly) NSOperationQueue*               queue;
 
+@property (nonatomic, strong)   UIColor*                        tempNavigationBarTintColor;
+
 @end
 
 
@@ -52,7 +54,6 @@
 
 - (void)setup
 {
-    self.tintColor = [UIColor blackColor];
     self.textColor = [UIColor whiteColor];
     self.selectedColor = [UIColor greenColor];
     
@@ -81,8 +82,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.navigationController.navigationBar.barTintColor = self.tintColor;
     
     self.photosCollectionViewFlowLayout = [UICollectionViewFlowLayout new];
     self.photosCollectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:self.photosCollectionViewFlowLayout];
@@ -115,6 +114,18 @@
     
     CGFloat scale = [UIScreen mainScreen].scale;
     self.assetSize =  CGSizeApplyAffineTransform(self.photosCollectionViewFlowLayout.itemSize, CGAffineTransformMakeScale(scale, scale));
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if(self.navigationController && [self.navigationController.viewControllers firstObject] == self)
+    {
+        UIBarButtonItem* cancelButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+        [cancelButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName:self.textColor} forState:UIControlStateNormal];
+        self.navigationItem.leftBarButtonItem = cancelButtonItem;
+    }
     
     if(self.allowsMultipleSelection)
     {
@@ -126,18 +137,6 @@
     {
         self.navigationItem.rightBarButtonItem = nil;
     }
-    
-    if(self.navigationItem.backBarButtonItem == nil)
-    {
-        UIBarButtonItem* cancelButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
-        [cancelButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName:self.textColor} forState:UIControlStateNormal];
-        self.navigationItem.leftBarButtonItem = cancelButtonItem;
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     
     [self.photoManager checkAuthorizationStatusAndFetchWithCompletionBlock:^(BOOL success) {
         
@@ -219,6 +218,8 @@
     [self.images removeAllObjects];
     
     NSArray<NSIndexPath*>* selectedItems = [self.photosCollectionView indexPathsForSelectedItems];
+
+    __block NSUInteger operationCounter = 0;
     
     for(NSIndexPath* indexPath in selectedItems)
     {
@@ -240,11 +241,13 @@
                         UIImage* image = [UIImage imageWithData:imageData];
                         
                         [self.images addObject:image];
-                        
-                        if(self.queue.operationCount == 0)
-                        {
-                            [self dismiss];
-                        }
+                    }
+                    
+                    operationCounter++;
+                    
+                    if(operationCounter == selectedItems.count)
+                    {
+                        [self dismiss];
                     }
                 }];
             }

@@ -10,8 +10,6 @@
 
 @interface JOImagePickerViewController : UIViewController
 
-@property (nonatomic, strong)   UIColor*    tintColor;
-
 @property (nonatomic, strong)   UIColor*    textColor;
 
 @property (nonatomic, strong)   UIColor*    selectedColor;              // default greenColor

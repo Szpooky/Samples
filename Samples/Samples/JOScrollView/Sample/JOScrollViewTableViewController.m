@@ -76,9 +76,7 @@
 }
 
 
-#pragma mark - Table view data source
-
-#pragma mark - TableView Delegate And Datasource
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

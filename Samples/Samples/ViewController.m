@@ -44,9 +44,11 @@
     
     [self.dataSource addObject:@{@"title" : @"Downloader"}];
     
-    [self.dataSource addObject:@{@"title" : @"ImagePicker"}];
+    [self.dataSource addObject:@{@"title" : @"ImagePicker", @"controller" : @"JOImagePickerSampleTableViewController"}];
     
     [self.dataSource addObject:@{@"title" : @"MaskView" , @"controller" : @"JOCircleMaskViewController"}];
+    
+    [self.dataSource addObject:@{@"title" : @"StackView"}];
 }
 
 #pragma mark - TableView Delegate And Datasource

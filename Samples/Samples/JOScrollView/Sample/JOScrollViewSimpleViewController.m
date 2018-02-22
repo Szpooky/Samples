@@ -39,11 +39,11 @@
     
     CGFloat paddingX = 20.0;
     CGFloat sideSize = CGRectGetWidth(self.view.bounds) - paddingX * 2.0;
-    JOScrollView* scrollView = [[JOScrollView alloc] initWithFrame:CGRectMake(paddingX, floorf(CGRectGetHeight(self.view.bounds) / 2.0 - sideSize / 2.0), sideSize, sideSize)];
-    scrollView.transformator = [JOScrollViewSimpleTransformator new];
-    scrollView.view = imageView;
-    scrollView.backgroundColor = [UIColor grayColor];
-    [self.view addSubview:scrollView];
+    _scrollView = [[JOScrollView alloc] initWithFrame:CGRectMake(paddingX, floorf(CGRectGetHeight(self.view.bounds) / 2.0 - sideSize / 2.0), sideSize, sideSize)];
+    self.scrollView.transformator = [JOScrollViewSimpleTransformator new];
+    self.scrollView.view = imageView;
+    self.scrollView.backgroundColor = [UIColor grayColor];
+    [self.view addSubview:self.scrollView];
     
     UIView* coverView = [[UIView alloc] initWithFrame:self.view.bounds];
     coverView.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1];

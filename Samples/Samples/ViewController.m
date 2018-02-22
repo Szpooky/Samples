@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "JOScrollViewTableViewController.h"
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate>
 
@@ -45,9 +44,9 @@
     
     [self.dataSource addObject:@{@"title" : @"Downloader"}];
     
-    [self.dataSource addObject:@{@"title" : @"AttributedLabel"}];
-    
     [self.dataSource addObject:@{@"title" : @"ImagePicker"}];
+    
+    [self.dataSource addObject:@{@"title" : @"MaskView" , @"controller" : @"JOCircleMaskViewController"}];
 }
 
 #pragma mark - TableView Delegate And Datasource

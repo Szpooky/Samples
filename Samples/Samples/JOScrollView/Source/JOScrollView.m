@@ -89,4 +89,12 @@
     }
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    
+    self.view.frame = self.bounds;
+    [self.transformator resetAnimated:NO];
+}
+
 @end

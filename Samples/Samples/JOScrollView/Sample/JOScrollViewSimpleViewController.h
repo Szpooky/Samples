@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class JOScrollView;
+
 @interface JOScrollViewSimpleViewController : UIViewController
+
+@property (nonatomic, readonly) JOScrollView*   scrollView;
 
 @end

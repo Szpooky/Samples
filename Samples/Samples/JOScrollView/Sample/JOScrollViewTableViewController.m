@@ -72,7 +72,7 @@
     
     [self.dataSource addObject:@{@"title" : @"Simple", @"controller" : @"JOScrollViewSimpleViewController"}];
     
-    [self.dataSource addObject:@{@"title" : @"Masked Simple", @"controller" : @""}];
+    [self.dataSource addObject:@{@"title" : @"Masked Simple", @"controller" : @"JOScrollViewMaskedSimpleViewController"}];
 }
 
 

@@ -20,6 +20,9 @@
 		C2223B59203DECF90031C8F4 /* JOScrollViewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2223B58203DECF90031C8F4 /* JOScrollViewTableViewController.m */; };
 		C2223B5C203DEF250031C8F4 /* JOScrollViewOldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2223B5B203DEF250031C8F4 /* JOScrollViewOldViewController.m */; };
 		C2223B5F203DEF370031C8F4 /* JOScrollViewSimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2223B5E203DEF370031C8F4 /* JOScrollViewSimpleViewController.m */; };
+		C2223B65203F0E6F0031C8F4 /* JOPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C2223B64203F0E6F0031C8F4 /* JOPhotoManager.m */; };
+		C2223B68203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2223B67203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.m */; };
+		C2223B6B203F0FA10031C8F4 /* JOImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2223B6A203F0FA10031C8F4 /* JOImagePickerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +50,12 @@
 		C2223B5B203DEF250031C8F4 /* JOScrollViewOldViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOScrollViewOldViewController.m; sourceTree = "<group>"; };
 		C2223B5D203DEF370031C8F4 /* JOScrollViewSimpleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOScrollViewSimpleViewController.h; sourceTree = "<group>"; };
 		C2223B5E203DEF370031C8F4 /* JOScrollViewSimpleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOScrollViewSimpleViewController.m; sourceTree = "<group>"; };
+		C2223B63203F0E6F0031C8F4 /* JOPhotoManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOPhotoManager.h; sourceTree = "<group>"; };
+		C2223B64203F0E6F0031C8F4 /* JOPhotoManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOPhotoManager.m; sourceTree = "<group>"; };
+		C2223B66203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOImagePickerCollectionViewCell.h; sourceTree = "<group>"; };
+		C2223B67203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOImagePickerCollectionViewCell.m; sourceTree = "<group>"; };
+		C2223B69203F0FA10031C8F4 /* JOImagePickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOImagePickerViewController.h; sourceTree = "<group>"; };
+		C2223B6A203F0FA10031C8F4 /* JOImagePickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOImagePickerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +88,7 @@
 		C2223B2E203DE7FA0031C8F4 /* Samples */ = {
 			isa = PBXGroup;
 			children = (
+				C2223B60203F0E080031C8F4 /* JOImagePicker */,
 				C2223B48203DEC6A0031C8F4 /* JOScrollView */,
 				C2223B2F203DE7FA0031C8F4 /* AppDelegate.h */,
 				C2223B30203DE7FA0031C8F4 /* AppDelegate.m */,
@@ -126,6 +136,35 @@
 				C2223B5B203DEF250031C8F4 /* JOScrollViewOldViewController.m */,
 				C2223B5D203DEF370031C8F4 /* JOScrollViewSimpleViewController.h */,
 				C2223B5E203DEF370031C8F4 /* JOScrollViewSimpleViewController.m */,
+			);
+			path = Sample;
+			sourceTree = "<group>";
+		};
+		C2223B60203F0E080031C8F4 /* JOImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				C2223B61203F0E080031C8F4 /* Source */,
+				C2223B62203F0E080031C8F4 /* Sample */,
+			);
+			path = JOImagePicker;
+			sourceTree = "<group>";
+		};
+		C2223B61203F0E080031C8F4 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				C2223B69203F0FA10031C8F4 /* JOImagePickerViewController.h */,
+				C2223B6A203F0FA10031C8F4 /* JOImagePickerViewController.m */,
+				C2223B63203F0E6F0031C8F4 /* JOPhotoManager.h */,
+				C2223B64203F0E6F0031C8F4 /* JOPhotoManager.m */,
+				C2223B66203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.h */,
+				C2223B67203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.m */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		C2223B62203F0E080031C8F4 /* Sample */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Sample;
 			sourceTree = "<group>";
@@ -202,8 +241,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2223B34203DE7FA0031C8F4 /* ViewController.m in Sources */,
+				C2223B65203F0E6F0031C8F4 /* JOPhotoManager.m in Sources */,
 				C2223B3F203DE7FA0031C8F4 /* main.m in Sources */,
+				C2223B68203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.m in Sources */,
 				C2223B59203DECF90031C8F4 /* JOScrollViewTableViewController.m in Sources */,
+				C2223B6B203F0FA10031C8F4 /* JOImagePickerViewController.m in Sources */,
 				C2223B5F203DEF370031C8F4 /* JOScrollViewSimpleViewController.m in Sources */,
 				C2223B54203DEC6B0031C8F4 /* JOScrollView.m in Sources */,
 				C2223B56203DEC6B0031C8F4 /* JOScrollViewOldTransformator.m in Sources */,

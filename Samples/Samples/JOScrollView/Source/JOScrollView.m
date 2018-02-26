@@ -57,36 +57,31 @@
         self.transformator.baseView = self;
         self.transformator.minimumZoomScale = self.minimumZoomScale;
         self.transformator.maximumZoomScale = self.maximumZoomScale;
-        
-        UIPinchGestureRecognizer* pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self.transformator action:@selector(pinchGestureAction:)];
-        pinchGesture.delegate = self.transformator;
-        [self addGestureRecognizer:pinchGesture];
-        
-        UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self.transformator action:@selector(panGestureAction:)];
-        panGesture.delegate = self.transformator;
-        [self addGestureRecognizer:panGesture];
-        
-        UIRotationGestureRecognizer* rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self.transformator action:@selector(rotationGestureAction:)];
-        rotationGesture.delegate = self.transformator;
-        [self addGestureRecognizer:rotationGesture];
-        
-        UITapGestureRecognizer* doubleTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.transformator action:@selector(doubleTapGestureAction:)];
-        doubleTapGesture.numberOfTapsRequired = 2;
-        [self addGestureRecognizer:doubleTapGesture];
+        [self addGestureRecognizer:self.transformator.pinchGesture];
+        [self addGestureRecognizer:self.transformator.panGesture];
+        [self addGestureRecognizer:self.transformator.rotationGesture];
+        [self addGestureRecognizer:self.transformator.doubleTapGesture];
     }
 }
 
 - (void)setView:(UIView *)view
 {
-    _view = view;
-    
-    if(view)
+    if(view != self.transformator.contentView)
     {
-        [self addSubview:view];
-        view.frame = self.bounds;
+        [self.transformator.contentView removeFromSuperview];
+        
         self.transformator.contentView = view;
-        [self.transformator resetAnimated:NO];
+        
+        if(view)
+        {
+            [self addSubview:view];
+        }
     }
+}
+
+- (UIView*)view
+{
+    return self.transformator.contentView;
 }
 
 - (void)setFrame:(CGRect)frame

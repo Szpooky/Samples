@@ -18,6 +18,14 @@
 
 @property (nonatomic)           CGFloat     maximumZoomScale;   // default is 100.0
 
+@property (nonatomic, readonly) UIPinchGestureRecognizer* pinchGesture;
+
+@property (nonatomic, readonly) UIPanGestureRecognizer* panGesture;
+
+@property (nonatomic, readonly) UIRotationGestureRecognizer* rotationGesture;
+
+@property (nonatomic, readonly) UITapGestureRecognizer* doubleTapGesture;
+
 // override points
 - (void)pinchGestureAction:(UIPinchGestureRecognizer*)gesture;
 

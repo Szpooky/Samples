@@ -23,6 +23,15 @@
     CGFloat     _currentRotation;
 }
 
+- (void)setContentView:(UIView *)contentView
+{
+    [super setContentView:contentView];
+    
+    contentView.frame = self.baseView.bounds;
+    
+    [self resetAnimated:NO];
+}
+
 - (void)pinchGestureAction:(UIPinchGestureRecognizer*)gesture
 {
     if ([gesture state] == UIGestureRecognizerStateBegan)

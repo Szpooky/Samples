@@ -17,6 +17,18 @@
     {
         self.minimumZoomScale = 1.0;
         self.maximumZoomScale = 100.0;
+        
+        _pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGestureAction:)];
+        _pinchGesture.delegate = self;
+        
+        _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureAction:)];
+        _panGesture.delegate = self;
+        
+        _rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotationGestureAction:)];
+        _rotationGesture.delegate = self;
+        
+        _doubleTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGestureAction:)];
+        _doubleTapGesture.numberOfTapsRequired = 2;
     }
     return self;
 }

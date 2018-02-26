@@ -24,6 +24,8 @@
 		C2223B68203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2223B67203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.m */; };
 		C2223B6B203F0FA10031C8F4 /* JOImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2223B6A203F0FA10031C8F4 /* JOImagePickerViewController.m */; };
 		C2223B77203F2E5C0031C8F4 /* JOScrollViewMaskedSimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2223B76203F2E5C0031C8F4 /* JOScrollViewMaskedSimpleViewController.m */; };
+		C28B809B20435387001D1E93 /* JOScrollViewCenteredTransformator.m in Sources */ = {isa = PBXBuildFile; fileRef = C28B809A20435387001D1E93 /* JOScrollViewCenteredTransformator.m */; };
+		C28B809E2043547B001D1E93 /* JOScrollViewCenteredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C28B809D2043547B001D1E93 /* JOScrollViewCenteredViewController.m */; };
 		C2E935E4203F4D4500F2A1DD /* JOCircleMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E935E3203F4D4500F2A1DD /* JOCircleMaskView.m */; };
 		C2E935E7203F4EE400F2A1DD /* JOCircleMaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E935E6203F4EE400F2A1DD /* JOCircleMaskViewController.m */; };
 		C2E935EA203F591500F2A1DD /* JOImagePickerSampleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E935E9203F591500F2A1DD /* JOImagePickerSampleTableViewController.m */; };
@@ -62,6 +64,10 @@
 		C2223B6A203F0FA10031C8F4 /* JOImagePickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOImagePickerViewController.m; sourceTree = "<group>"; };
 		C2223B75203F2E5C0031C8F4 /* JOScrollViewMaskedSimpleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOScrollViewMaskedSimpleViewController.h; sourceTree = "<group>"; };
 		C2223B76203F2E5C0031C8F4 /* JOScrollViewMaskedSimpleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOScrollViewMaskedSimpleViewController.m; sourceTree = "<group>"; };
+		C28B809920435387001D1E93 /* JOScrollViewCenteredTransformator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOScrollViewCenteredTransformator.h; sourceTree = "<group>"; };
+		C28B809A20435387001D1E93 /* JOScrollViewCenteredTransformator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOScrollViewCenteredTransformator.m; sourceTree = "<group>"; };
+		C28B809C2043547B001D1E93 /* JOScrollViewCenteredViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOScrollViewCenteredViewController.h; sourceTree = "<group>"; };
+		C28B809D2043547B001D1E93 /* JOScrollViewCenteredViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOScrollViewCenteredViewController.m; sourceTree = "<group>"; };
 		C2E935E2203F4D4500F2A1DD /* JOCircleMaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOCircleMaskView.h; sourceTree = "<group>"; };
 		C2E935E3203F4D4500F2A1DD /* JOCircleMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOCircleMaskView.m; sourceTree = "<group>"; };
 		C2E935E5203F4EE400F2A1DD /* JOCircleMaskViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOCircleMaskViewController.h; sourceTree = "<group>"; };
@@ -136,6 +142,8 @@
 				C2223B51203DEC6A0031C8F4 /* JOScrollViewOldTransformator.m */,
 				C2223B4B203DEC6A0031C8F4 /* JOScrollViewSimpleTransformator.h */,
 				C2223B50203DEC6A0031C8F4 /* JOScrollViewSimpleTransformator.m */,
+				C28B809920435387001D1E93 /* JOScrollViewCenteredTransformator.h */,
+				C28B809A20435387001D1E93 /* JOScrollViewCenteredTransformator.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -151,6 +159,8 @@
 				C2223B5E203DEF370031C8F4 /* JOScrollViewSimpleViewController.m */,
 				C2223B75203F2E5C0031C8F4 /* JOScrollViewMaskedSimpleViewController.h */,
 				C2223B76203F2E5C0031C8F4 /* JOScrollViewMaskedSimpleViewController.m */,
+				C28B809C2043547B001D1E93 /* JOScrollViewCenteredViewController.h */,
+				C28B809D2043547B001D1E93 /* JOScrollViewCenteredViewController.m */,
 			);
 			path = Sample;
 			sourceTree = "<group>";
@@ -291,12 +301,14 @@
 				C2223B68203F0EFB0031C8F4 /* JOImagePickerCollectionViewCell.m in Sources */,
 				C2223B77203F2E5C0031C8F4 /* JOScrollViewMaskedSimpleViewController.m in Sources */,
 				C2223B59203DECF90031C8F4 /* JOScrollViewTableViewController.m in Sources */,
+				C28B809B20435387001D1E93 /* JOScrollViewCenteredTransformator.m in Sources */,
 				C2223B6B203F0FA10031C8F4 /* JOImagePickerViewController.m in Sources */,
 				C2223B5F203DEF370031C8F4 /* JOScrollViewSimpleViewController.m in Sources */,
 				C2223B54203DEC6B0031C8F4 /* JOScrollView.m in Sources */,
 				C2E935EA203F591500F2A1DD /* JOImagePickerSampleTableViewController.m in Sources */,
 				C2223B56203DEC6B0031C8F4 /* JOScrollViewOldTransformator.m in Sources */,
 				C2223B31203DE7FA0031C8F4 /* AppDelegate.m in Sources */,
+				C28B809E2043547B001D1E93 /* JOScrollViewCenteredViewController.m in Sources */,
 				C2223B53203DEC6B0031C8F4 /* JOScrollViewTransformator.m in Sources */,
 				C2E935E7203F4EE400F2A1DD /* JOCircleMaskViewController.m in Sources */,
 				C2223B55203DEC6B0031C8F4 /* JOScrollViewSimpleTransformator.m in Sources */,

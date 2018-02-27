@@ -92,4 +92,14 @@
     [self.transformator resetAnimated:NO];
 }
 
+- (void)setBouncing:(BOOL)bouncing
+{
+    self.transformator.bouncing = bouncing;
+}
+
+- (BOOL)bouncing
+{
+    return self.transformator.bouncing;
+}
+
 @end

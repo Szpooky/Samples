@@ -18,6 +18,8 @@
 
 @property (nonatomic)           CGFloat     maximumZoomScale;   // default is 100.0
 
+@property (nonatomic)           BOOL        bouncing;           // default YES
+
 @property (nonatomic, readonly) UIPinchGestureRecognizer* pinchGesture;
 
 @property (nonatomic, readonly) UIPanGestureRecognizer* panGesture;

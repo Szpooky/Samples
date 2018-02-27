@@ -18,6 +18,8 @@
         self.minimumZoomScale = 1.0;
         self.maximumZoomScale = 100.0;
         
+        self.bouncing = YES;
+        
         _pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGestureAction:)];
         _pinchGesture.delegate = self;
         

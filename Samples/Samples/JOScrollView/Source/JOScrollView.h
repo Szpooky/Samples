@@ -16,9 +16,13 @@
 
 @property (nonatomic, strong)   UIView*                         view;               // default nil
 
-#warning - Under Development
 @property (nonatomic)           BOOL                            bouncing;           // default YES
 
+@property (nonatomic)           CGFloat                         minimumZoomScale;   // default is 1.0
+
+@property (nonatomic)           CGFloat                         maximumZoomScale;   // default is 100.0
+
+#warning - Under Development
 @property (nonatomic)           BOOL                            enableRotation;     // default YES
 
 @property (nonatomic)           BOOL                            enableTranslation;  // default YES
@@ -26,9 +30,5 @@
 @property (nonatomic)           BOOL                            enableScaling;      // default YES
 
 @property (nonatomic)           BOOL                            keepBounds;         // default NO
-
-@property (nonatomic)           CGFloat                         minimumZoomScale;   // default is 1.0
-
-@property (nonatomic)           CGFloat                         maximumZoomScale;   // default is 1.0
 
 @end

@@ -10,7 +10,8 @@
 
 typedef struct Square
 {
-    CGPoint leftTop, rigthTop, rightBottom, leftBottom;
+    CGPoint leftTop, rightTop, rightBottom, leftBottom, center;
+    CGFloat width, height;
 }Square;
 
 typedef struct Canvas
@@ -28,14 +29,43 @@ typedef struct Canvas
     CGPoint currentTranslate;
 }Canvas;
 
-Square applyAffineTransform(Square square, CGAffineTransform transform)
+void calculateSquareSize(Square* square)
+{
+    if(square)
+    {
+        square->width = square->rightTop.x - square->leftTop.x;
+        square->height = square->leftBottom.y - square->leftTop.y;
+        
+        square->center = CGPointMake(roundf(square->width / 2.0 + square->leftTop.x), roundf(square->height / 2.0 + square->leftTop.y));
+    }
+}
+
+Square applyAffineTransformOnSquare(Square square, CGAffineTransform transform)
 {
     Square retVal;
     
     retVal.leftTop = CGPointApplyAffineTransform(square.leftTop, transform);
-    retVal.rigthTop = CGPointApplyAffineTransform(square.rigthTop, transform);
+    retVal.rightTop = CGPointApplyAffineTransform(square.rightTop, transform);
     retVal.rightBottom = CGPointApplyAffineTransform(square.rightBottom, transform);
     retVal.leftBottom = CGPointApplyAffineTransform(square.leftBottom, transform);
+    
+    calculateSquareSize(&retVal);
+    
+    // Create "Integers" from Floats
+    retVal.leftTop.x = roundf(retVal.leftTop.x);
+    retVal.leftTop.y = roundf(retVal.leftTop.y);
+    
+    retVal.rightTop.x = roundf(retVal.rightTop.x);
+    retVal.rightTop.y = roundf(retVal.rightTop.y);
+    
+    retVal.rightBottom.x = roundf(retVal.rightBottom.x);
+    retVal.rightBottom.y = roundf(retVal.rightBottom.y);
+    
+    retVal.leftBottom.x = roundf(retVal.leftBottom.x);
+    retVal.leftBottom.y = roundf(retVal.leftBottom.y);
+    
+    retVal.center.x = roundf(retVal.center.x);
+    retVal.center.y = roundf(retVal.center.y);
     
     return retVal;
 }
@@ -45,7 +75,7 @@ Square squareFromView(CGRect rect, CGPoint center)
     Square retVal;
     
     retVal.leftTop = CGPointMake(CGRectGetMinX(rect) - center.x, CGRectGetMinY(rect) - center.y);
-    retVal.rigthTop = CGPointMake(CGRectGetMinX(rect) - center.x + CGRectGetWidth(rect), CGRectGetMinY(rect) - center.y);
+    retVal.rightTop = CGPointMake(CGRectGetMinX(rect) - center.x + CGRectGetWidth(rect), CGRectGetMinY(rect) - center.y);
     retVal.rightBottom = CGPointMake(CGRectGetMinX(rect) - center.x + CGRectGetWidth(rect), CGRectGetMinY(rect) - center.y + CGRectGetHeight(rect));
     retVal.leftBottom = CGPointMake(CGRectGetMinX(rect) - center.x, CGRectGetMinY(rect) - center.y + CGRectGetHeight(rect));
     
@@ -59,7 +89,7 @@ CGRect rectFromSquare(Square square, CGPoint center)
     retVal.origin.x = center.x + square.leftTop.x;
     retVal.origin.y = center.y + square.leftTop.y;
     
-    retVal.size.width = square.rigthTop.x - square.leftTop.x;
+    retVal.size.width = square.rightTop.x - square.leftTop.x;
     retVal.size.height = square.leftBottom.y - square.leftTop.y;
     
     return retVal;
@@ -75,7 +105,7 @@ CGAffineTransform transformFromCanvas(Canvas canvas)
 
 CGRect contentRectFromCanvas(Canvas canvas)
 {
-    return rectFromSquare(applyAffineTransform(canvas.content, transformFromCanvas(canvas)), canvas.center);
+    return rectFromSquare(applyAffineTransformOnSquare(canvas.content, transformFromCanvas(canvas)), canvas.center);
 }
 
 CGFloat ScaleToAspectFitRectInRect(CGRect rfit, CGRect rtarget)
@@ -128,6 +158,8 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
     self.contentView.frame = _minimumRect;
 
     _canvas.content = squareFromView(_minimumRect, _canvas.center);
+
+    self.maximumZoomScale = _originalSize.width / _minimumRect.size.width;
     
     [self resetAnimated:NO];
 }
@@ -137,6 +169,8 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
     _canvas.center = CGPointMake(roundf(self.baseView.bounds.size.width / 2.0), roundf(self.baseView.bounds.size.height / 2.0));
     
     _canvas.base = squareFromView(self.baseView.bounds, _canvas.center);
+    
+    calculateSquareSize(&_canvas.base);
 }
 
 - (void)pinchGestureAction:(UIPinchGestureRecognizer*)gesture
@@ -146,7 +180,10 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
         _canvas.previousScale = _canvas.currentScale;
     }
     
-    _canvas.currentScale = MAX(MIN([gesture scale] * _canvas.previousScale, self.maximumZoomScale), self.minimumZoomScale);
+    CGFloat scale = [gesture scale];
+    _canvas.currentScale = MAX(MIN(scale * _canvas.previousScale, self.maximumZoomScale), self.minimumZoomScale);
+    
+    [self keepInBounds];
     
     [self applyGestureTransformations];
 }
@@ -158,9 +195,15 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
         _canvas.previousTranslate = _canvas.currentTranslate;
     }
     
-    CGPoint changes = CGPointMake([gesture translationInView:self.baseView].x / _canvas.currentScale, [gesture translationInView:self.baseView].y / _canvas.currentScale);
+    CGPoint translate = [gesture translationInView:self.baseView];
+    
+    CGPoint changes = CGPointMake(translate.x / _canvas.currentScale, translate.y / _canvas.currentScale);
 
-    if(self.contentView.frame.size.width > self.baseView.frame.size.width)
+    Square square = applyAffineTransformOnSquare(_canvas.content, transformFromCanvas(_canvas));
+    
+    calculateSquareSize(&square);
+    
+    if(square.width > _canvas.base.width)
     {
         _canvas.currentTranslate.x = changes.x  + _canvas.previousTranslate.x;
     }
@@ -169,7 +212,7 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
         _canvas.currentTranslate.x = 0.0;
     }
     
-    if(self.contentView.frame.size.height > self.baseView.frame.size.height)
+    if(square.height > _canvas.base.height)
     {
         _canvas.currentTranslate.y = changes.y + _canvas.previousTranslate.y;
     }
@@ -178,44 +221,50 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
         _canvas.currentTranslate.y = 0.0;
     }
     
+    [self keepInBounds];
+    
     [self applyGestureTransformations];
+}
+
+- (void)keepInBounds
+{
+    Square square = applyAffineTransformOnSquare(_canvas.content, transformFromCanvas(_canvas));
     
-    /*
-     CGRect bounds = [self moveAreaForSize:self.contentView.frame.size];
-     
-     CGPoint translate;
-     translate.x = [gesture translationInView:self.baseView].x + _canvas.previousTranslate.x;
-     translate.y = [gesture translationInView:self.baseView].y + _canvas.previousTranslate.y;
-     
-     
-     CGRect transformedRect = CGRectApplyAffineTransform(_minimumRect, [self applyTransforms]);
-    transformedRect.origin.x += _minimumRect.origin.x;
-    transformedRect.origin.y += _minimumRect.origin.y;
-    self.contentView.frame = transformedRect; return;
+    calculateSquareSize(&square);
     
-    if(CGRectGetMinX(transformedRect) > 0.0 && transformedRect.size.width > self.baseView.frame.size.width)
+    if(square.width > _canvas.base.width)
     {
-        // Need Fix
-        _currentTranslate.x = _currentTranslate.x + CGRectGetMinX(transformedRect);
+        if(square.leftTop.x > _canvas.base.leftTop.x)
+        {
+            _canvas.currentTranslate.x -= (square.leftTop.x - _canvas.base.leftTop.x) / _canvas.currentScale;
+        }
+        
+        if(square.rightTop.x < _canvas.base.rightTop.x)
+        {
+            _canvas.currentTranslate.x += (_canvas.base.rightTop.x - square.rightTop.x) / _canvas.currentScale;
+        }
     }
-    if(CGRectGetMinY(transformedRect) > 0.0 && transformedRect.size.height > self.baseView.frame.size.height)
+    else
     {
-        // Need Fix
-        _currentTranslate.y = _currentTranslate.y + CGRectGetMinY(transformedRect);
-    }
-    
-    if(CGRectGetMaxX(transformedRect) > CGRectGetWidth(self.baseView.bounds) && transformedRect.size.width > self.baseView.frame.size.width)
-    {
-        // Need Fix
-        _currentTranslate.x = _currentTranslate.x + (CGRectGetMaxX(transformedRect) - CGRectGetWidth(self.baseView.bounds));
-    }
-    if(CGRectGetMaxY(transformedRect) > CGRectGetHeight(self.baseView.bounds) && transformedRect.size.height > self.baseView.frame.size.height)
-    {
-        // Need Fix
-        _currentTranslate.y = _currentTranslate.y + (CGRectGetMaxY(transformedRect) - CGRectGetHeight(self.baseView.bounds));
+        _canvas.currentTranslate.x -= (square.center.x - _canvas.base.center.x) / _canvas.currentScale;
     }
     
-    [self applyGestureTransformations];*/
+    if(square.height > _canvas.base.height)
+    {
+        if(square.leftTop.y > _canvas.base.leftTop.y)
+        {
+            _canvas.currentTranslate.y -= (square.leftTop.y - _canvas.base.leftTop.y) / _canvas.currentScale;
+        }
+        
+        if(square.leftBottom.y < _canvas.base.leftBottom.y)
+        {
+            _canvas.currentTranslate.y += (_canvas.base.leftBottom.y - square.leftBottom.y) / _canvas.currentScale;
+        }
+    }
+    else
+    {
+        _canvas.currentTranslate.y -= (square.center.y - _canvas.base.center.y) / _canvas.currentScale;
+    }
 }
 
 - (void)applyGestureTransformations
@@ -237,7 +286,9 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
     
     if(animated)
     {
+        [self keepInBounds];
         CGRect frame = contentRectFromCanvas(_canvas);
+        
         [UIView animateWithDuration:0.2 animations:^{
             
             self.contentView.frame = frame;
@@ -246,15 +297,9 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
     }
     else
     {
+        [self keepInBounds];
         [self applyGestureTransformations];
     }
-}
-
-- (CGRect)moveAreaForSize:(CGSize)size
-{
-    CGSize moveArea = CGSizeMake(2.0 * size.width - _minimumRect.size.width, 2.0 * size.height - _minimumRect.size.height);
-    
-    return CGRectMake( floorf(CGRectGetWidth(self.baseView.bounds) / 2.0 - moveArea.width / 2.0), floorf(CGRectGetHeight(self.baseView.bounds) / 2.0 - moveArea.height / 2.0), moveArea.width, moveArea.height);
 }
 
 @end

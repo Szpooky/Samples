@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+
+@class JOScrollView;
 @class JOScrollViewTransformator;
 
+@protocol JOScrollViewDelegate <NSObject>
+
+- (void)scrollViewDidZoom:(JOScrollView*)scrollView scale:(CGFloat)scale;
+
+@end
+
 @interface JOScrollView : UIView
+
+@property (nonatomic, weak)     id<JOScrollViewDelegate>        delegate;
 
 @property (nonatomic, strong)   JOScrollViewTransformator*      transformator;
 
@@ -21,14 +31,5 @@
 @property (nonatomic)           CGFloat                         minimumZoomScale;   // default is 1.0
 
 @property (nonatomic)           CGFloat                         maximumZoomScale;   // default is 100.0
-
-#warning - Under Development
-@property (nonatomic)           BOOL                            enableRotation;     // default YES
-
-@property (nonatomic)           BOOL                            enableTranslation;  // default YES
-
-@property (nonatomic)           BOOL                            enableScaling;      // default YES
-
-@property (nonatomic)           BOOL                            keepBounds;         // default NO
 
 @end

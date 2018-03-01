@@ -140,6 +140,8 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
     CGRect      _minimumRect;
     
     Canvas      _canvas;
+    
+    CGFloat     _bouncing;
 }
 
 - (void)setBaseView:(UIView *)baseView
@@ -175,17 +177,66 @@ CGRect AspectFitRectInRect(CGRect rfit, CGRect rtarget)
 
 - (void)pinchGestureAction:(UIPinchGestureRecognizer*)gesture
 {
+    CGFloat scale = [gesture scale];
+    
     if ([gesture state] == UIGestureRecognizerStateBegan)
     {
         _canvas.previousScale = _canvas.currentScale;
     }
-    
-    CGFloat scale = [gesture scale];
-    _canvas.currentScale = MAX(MIN(scale * _canvas.previousScale, self.maximumZoomScale), self.minimumZoomScale);
-    
-    [self keepInBounds];
-    
-    [self applyGestureTransformations];
+    else if ([gesture state] == UIGestureRecognizerStateChanged)
+    {
+        if(self.bouncing && (_canvas.currentScale < self.minimumZoomScale || _canvas.currentScale > self.maximumZoomScale))
+        {
+            if(_bouncing == 0.0)
+            {
+                _bouncing = scale;
+            }
+            
+            _canvas.currentScale = scale * _canvas.previousScale;
+        }
+        else if(!self.bouncing)
+        {
+            _canvas.currentScale = MAX(MIN(scale * _canvas.previousScale, self.maximumZoomScale), 0.7 *self.minimumZoomScale);
+        }
+        else
+        {
+            _bouncing = 0.0;
+            
+            _canvas.currentScale = scale * _canvas.previousScale;
+        }
+        
+        [self keepInBounds];
+        
+        [self applyGestureTransformations];
+
+        if(self.zoomBlock)
+        {
+            self.zoomBlock(_canvas.currentScale);
+        }
+    }
+    else if(self.bouncing && _bouncing != 0.0)
+    {
+        _canvas.currentScale = _bouncing < 1.0 ? self.minimumZoomScale : self.maximumZoomScale;
+        
+        CGRect frame = contentRectFromCanvas(_canvas);
+        
+        self.baseView.userInteractionEnabled = NO;
+        [UIView animateWithDuration:0.3 animations:^{
+            
+            self.contentView.frame = frame;
+            
+        } completion:^(BOOL finished) {
+            
+            _bouncing = 0.0;
+            
+            self.baseView.userInteractionEnabled = YES;
+            
+            [self keepInBounds];
+            
+            [self applyGestureTransformations];
+            
+        }];
+    }
 }
 
 - (void)panGestureAction:(UIPanGestureRecognizer*)gesture

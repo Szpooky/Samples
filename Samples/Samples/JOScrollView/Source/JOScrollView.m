@@ -36,9 +36,6 @@
     self.clipsToBounds = YES;
     self.view = nil;
     self.bouncing = YES;
-    self.enableRotation = YES;
-    self.enableTranslation = YES;
-    self.enableScaling = YES;
     self.minimumZoomScale = 1.0;
     self.maximumZoomScale = 100.0;
 }
@@ -57,6 +54,17 @@
         self.transformator.baseView = self;
         self.transformator.minimumZoomScale = self.minimumZoomScale;
         self.transformator.maximumZoomScale = self.maximumZoomScale;
+        
+        __weak typeof(self) weakSelf = self;
+        self.transformator.zoomBlock = ^(CGFloat scale) {
+
+            if(weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(scrollViewDidZoom:scale:)])
+            {
+                [weakSelf.delegate scrollViewDidZoom:weakSelf scale:scale];
+            }
+            
+        };
+ 
         [self addGestureRecognizer:self.transformator.pinchGesture];
         [self addGestureRecognizer:self.transformator.panGesture];
         [self addGestureRecognizer:self.transformator.rotationGesture];

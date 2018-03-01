@@ -18,6 +18,6 @@
 
 @property (nonatomic, assign)   NSUInteger  limitOfMultipleSelection;   // default 0 (0 means infinity)
 
-@property (nonatomic, copy) void(^completionBlock)(BOOL isCanceled, NSArray<UIImage*>* images);
+@property (copy) void(^completionBlock)(BOOL isCanceled, NSArray<UIImage*>* images);
 
 @end

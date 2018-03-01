@@ -28,6 +28,8 @@
 
 @property (nonatomic, readonly) UITapGestureRecognizer* doubleTapGesture;
 
+@property (copy) void(^zoomBlock)(CGFloat scale);
+
 // override points
 - (void)pinchGestureAction:(UIPinchGestureRecognizer*)gesture;
 
